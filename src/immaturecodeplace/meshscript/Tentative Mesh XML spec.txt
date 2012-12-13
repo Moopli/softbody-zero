@@ -1,0 +1,76 @@
+--------------------------------------------------------------------------------
+- THE TENTATIVE MESH XML SPECS -
+
+
+- 1 : Convex polyhedra:
+...
+<convex [name="..."] [elasticity=...]>
+    <verlet>
+        <x>...</x>
+        <y>...</y>
+        <z>...</z>
+        [<mass>...</mass>] <-- default 1
+        [<xvel>...</xvel>] <-- default 0
+        [<yvel>...</yvel>] <-- default 0
+        [<zvel>...</zvel>] <-- default 0
+        [<mesh>...</mesh>]...? <-- defaults to belonging to no extra meshes
+    </verlet>
+    ...
+    ...
+    ...
+</convex>
+...
+
+A convex polyhedron would be read by a SAX parser, then constructed from the 
+given points by a factory -- now as for zipping...
+
+there must be some way to order the verlets, so zips other than all-to-all will 
+work too.
+
+- 2 : Zipping together Verlet groups:
+
+<zipper [type="..."]? mesh1="..." mesh2="..."/> ?
+
+<zipper type="all-to-all" mesh1="..." mesh2 = "..."/> would work for all-to-all 
+zippers, leaving some freaky mesh-futzing to set up more localized zippers.
+
+For example, when creating an elbow joint, one could introduce "elbow-radius", 
+"elbow-humerus" and "elbow-ulna" meshes, meaning there would be several 
+"ligaments" in the elbow, together controlling the DOFs.
+
+- 3 : Applying transforms:
+
+<per-turn>
+    <transform target="mesh-name...">
+        <WOO CODE OF SOME SORT>
+        </>
+    </transform>
+    ...
+    ...
+    ...
+</per-turn>
+
+<at-start>
+    <transform target="mesh-name...">
+        <WOO CODE OF SOME SORT>
+        </>
+    </transform>
+    ...
+    ...
+    ...
+</at-start>
+
+
+Now as for the transform code syntax -- perhaps consisting just of lists of XML 
+tags, the transforms would be applications of a limited number of commands.
+
+However, with <if condition="boolean var..."> ... </if> ... <else> ... </else> 
+tags, and similar while, for etc, the tag system could be made turing-complete 
+-- compiled at program start into hierarchies of enums, run speed could be close 
+to even half of usual.
+
+
+
+
+
+
